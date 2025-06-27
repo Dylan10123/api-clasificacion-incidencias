@@ -1,0 +1,9 @@
+# Ignorar carpeta de entrenamiento y modelo completo
+modelo/
+
+# Otros archivos temporales o entornos
+__pycache__/
+*.pyc
+.env
+.DS_Store
+api-venv/
