@@ -1,25 +1,25 @@
 from openpyxl.utils.dataframe import dataframe_to_rows
 from fastapi.responses import StreamingResponse
-from fastapi.responses import StreamingResponse
 from fastapi import FastAPI, UploadFile, File
 from openpyxl.styles import Font, PatternFill
 from openpyxl.utils import get_column_letter
-from fastapi import UploadFile, File
 from openpyxl import load_workbook
 from transformers import pipeline
 from datetime import datetime
 import pandas as pd
+import torch
 import io
 import os
 
 app = FastAPI()
 
 # Cargo el modelo
+dispositivo = 0 if torch.cuda.is_available() else -1
 modelo = pipeline(
     "text-classification",
     model="Dylan1012/modelo_roberta_postventa",
     top_k=None,
-    device=0,
+    device=dispositivo,
     truncation=True
 )
 
@@ -149,5 +149,4 @@ async def clasificar_archivo(file: UploadFile = File(...)):
         )
 
     except Exception as e:
-        return (str("033[91m {ERROR:}\033[00m " + str(e)))
-    
+        return {"error": f"❌ [ERROR] >>> {str(e)}"}
