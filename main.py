@@ -4,6 +4,7 @@ from fastapi import FastAPI, UploadFile, File
 from openpyxl.styles import Font, PatternFill
 from openpyxl.utils import get_column_letter
 from openpyxl import load_workbook
+from huggingface_hub import HfApi
 from transformers import pipeline
 from datetime import datetime
 import pandas as pd
@@ -14,13 +15,15 @@ import os
 app = FastAPI()
 
 # Cargo el modelo
+token = os.getenv("HUGGINGFACE_HUB_TOKEN")
 dispositivo = 0 if torch.cuda.is_available() else -1
 modelo = pipeline(
     "text-classification",
     model="Dylan1012/modelo_roberta_postventa",
     top_k=None,
     device=dispositivo,
-    truncation=True
+    truncation=True,
+    token=token
 )
 
 @app.post("/clasificar")
