@@ -1,5 +1,6 @@
-# Ignorar carpeta de entrenamiento y modelo completo
-modelo/
+# Datos de entrenamiento y pesos del modelo (privados / HuggingFace Hub)
+modelo/df_final.csv
+modelo/modelo_roberta_postventa/
 
 # Otros archivos temporales o entornos
 __pycache__/
@@ -8,3 +9,4 @@ __pycache__/
 .DS_Store
 api-venv/
 subir_modelo.py
+.claude/
